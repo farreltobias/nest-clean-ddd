@@ -1,0 +1,50 @@
+@baseURL = http://localhost:3333
+@authToken = {{authenticate.response.body.access_token}}
+
+# @name craete_account
+POST {{baseURL}}/accounts
+Content-Type: application/json
+
+{
+  "name": "John doe",
+  "email": "johndoe@email.com",
+  "password": "123456"
+}
+
+###
+
+# @name authenticate
+POST {{baseURL}}/sessions
+Content-Type: application/json
+
+{
+  "email": "johndoe@email.com",
+  "password": "123456"
+}
+
+###
+
+# @name create_question
+POST {{baseURL}}/questions
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "title": "What is the best programming language?",
+  "content": "I want to know what is the best programming language to learn in 2024",
+  "attachments": []
+}
+
+###
+
+# @name fetch_recent_questions
+GET {{baseURL}}/questions?page=1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+# @name get_question_by_slug
+GET {{baseURL}}/questions/what-is-the-best-programming-language
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
